@@ -1,11 +1,16 @@
-import { RawData } from "@paperback/types"
-import { PaperbackPolyfills } from "./PaperbackPolyfills"
+import { RawData } from "@bindu-moe/types"
+import { BinduPolyfills } from "./BinduPolyfills"
 
-PaperbackPolyfills.createByteArray = function (rawData: RawData): ByteArray {
-    return new Uint8Array(rawData)
+// ByteArray definieren
+interface ByteArray extends Uint8Array {
+  [key: number]: number;
 }
 
-PaperbackPolyfills.createRawData = function ({ byteArray }): RawData {
+BinduPolyfills.createByteArray = function (rawData: RawData): ByteArray {
+    return new Uint8Array(rawData) as ByteArray;
+}
+
+BinduPolyfills.createRawData = function ({ byteArray }: { byteArray: Uint8Array }): RawData {
     return {
         ...byteArray,
         length: byteArray.length,
@@ -34,8 +39,8 @@ PaperbackPolyfills.createRawData = function ({ byteArray }): RawData {
                     char2 = this[i++];
                     char3 = this[i++];
                     out += String.fromCharCode(((c & 0x0F) << 12) |
-                                ((char2 & 0x3F) << 6) |
-                                ((char3 & 0x3F) << 0));
+                                            ((char2 & 0x3F) << 6) |
+                                            ((char3 & 0x3F) << 0));
                     break;
                 }
             }

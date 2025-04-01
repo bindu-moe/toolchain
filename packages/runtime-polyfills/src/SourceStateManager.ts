@@ -1,5 +1,5 @@
-import { SecureStateManager, SourceStateManager } from "@paperback/types"
-import { PaperbackPolyfills } from "./PaperbackPolyfills"
+import { SecureStateManager, SourceStateManager } from "@bindu-moe/types"
+import { BinduPolyfills } from "./BinduPolyfills"
 
 class MockSecureStateManager implements SecureStateManager {
     private objectStore: Record<string, any> = {}
@@ -26,6 +26,6 @@ class MockSourceStateManager implements SourceStateManager {
     }
 }
 
-PaperbackPolyfills.createSourceStateManager = function (): SourceStateManager {
+BinduPolyfills.createSourceStateManager = function (): SourceStateManager {
     return new MockSourceStateManager()
 }

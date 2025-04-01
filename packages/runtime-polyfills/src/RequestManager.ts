@@ -1,5 +1,5 @@
-import { RequestManager, Request, Response, SourceInterceptor } from "@paperback/types"
-import { PaperbackPolyfills } from "./PaperbackPolyfills"
+import { RequestManager, Request, Response, SourceInterceptor } from "@bindu-moe/types"
+import { BinduPolyfills } from "./BinduPolyfills"
 import axios, { Method } from 'axios'
 
 class MockRequestManager implements RequestManager {
@@ -19,69 +19,57 @@ class MockRequestManager implements RequestManager {
         return ''
     }
 
-    async schedule(request: Request, retryCount: number) {
+    async schedule(request: Request, retryCount?: number): Promise<Response> {
+        let res = (await axios({
+            method: request.method as Method,
+            url: request.url,
+            data: request.data,
+            headers: request.headers,
+            timeout: this.requestTimeout
+        }))
 
-        // Pass this request through the interceptor if one exists
-        if (this.interceptor) {
-            request = await this.interceptor.interceptRequest(request)
-        }
+        return createResponse(request, res)
+    }
 
-        // Append any cookies into the header properly
-        let headers: any = request.headers ?? {}
+    async schedule_bulk(requestArray: Request[], retryCount?: number): Promise<Response[]> {
+        return await Promise.all(requestArray.map(x => this.schedule(x, retryCount)))
+    }
 
-        let cookieData = ''
-        for (let cookie of request.cookies ?? [])
-            cookieData += `${cookie.name}=${cookie.value};`
-
-        headers['cookie'] = cookieData
-
-        // If no user agent has been supplied, default to a basic Paperback-iOS agent
-        headers['user-agent'] = headers["user-agent"] ?? 'Paperback-iOS'
-
-        // If we are using a urlencoded form data as a post body, we need to decode the request for Axios
-        let decodedData = request.data
-        if (typeof decodedData == 'object') {
-            if (headers['content-type']?.includes('application/x-www-form-urlencoded')) {
-                decodedData = ""
-                Object.keys(request.data).forEach(attribute => {
-                    if (decodedData.length > 0) {
-                        decodedData += "&"
-                    }
-                    decodedData += `${attribute}=${request.data[attribute]}`
-                })
-            }
-        }
-
-        // We must first get the response object from Axios, and then transcribe it into our own Response type before returning
-        let response = await axios(`${request.url}${request.param ?? ''}`, {
-            method: <Method>request.method,
-            headers: headers,
-            data: decodedData,
-            timeout: this.requestTimeout || 0,
-            responseType: 'arraybuffer'
-        })
-
-        let responsePacked: Response = {
-            rawData: App.createRawData({byteArray: (response.data as Buffer)}),
-            data: Buffer.from(response.data, 'binary').toString(),
-            status: response.status,
-            headers: response.headers,
-            request: request
-        }
-
-        // Pass this through the response interceptor if one exists
-        if (this.interceptor) {
-            responsePacked = await this.interceptor.interceptResponse(responsePacked)
-        }
-
-        return responsePacked
+    async scheduleWithTimeout(timeout: number, request: Request, retryCount?: number): Promise<Response> {
+        return await this.schedule(request, retryCount)
     }
 }
 
-PaperbackPolyfills.createRequestManager = function (info): RequestManager {
-    return new MockRequestManager(
-        info.interceptor,
-        info.requestsPerSecond,
-        info.requestTimeout
-    )
+function createResponse(request: Request, axios_response: any): Response {
+    const buffer = axios_response.data instanceof Buffer
+    if (axios_response.headers["content-type"]?.includes("image/") && !buffer) {
+        // Convert response data to buffer if we're getting an image
+        return {
+            status: axios_response.status,
+            headers: axios_response.headers,
+            request,
+            data: Buffer.from(axios_response.data, 'binary').toString('binary')
+        }
+    }
+
+    if (buffer) {
+        return {
+            status: axios_response.status,
+            headers: axios_response.headers,
+            request,
+            rawData: BinduPolyfills.createRawData?.({byteArray: (axios_response.data as Buffer)}) ?? axios_response.data,
+            data: undefined
+        }
+    }
+
+    return {
+        status: axios_response.status,
+        headers: axios_response.headers,
+        request,
+        data: axios_response.data
+    }
+}
+
+BinduPolyfills.createRequestManager = function (info: Record<string, any>): RequestManager {
+    return new MockRequestManager(info?.interceptor, info?.requestsPerSecond, info?.requestTimeout)
 }

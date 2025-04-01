@@ -1,6 +1,5 @@
-
-import '@paperback/runtime-polyfills'
-import {HomeSection, HomePageSectionsProviding, ChapterProviding, MangaProviding, SearchResultsProviding} from '@paperback/types'
+import '@bindu-moe/runtime-polyfills'
+import {HomeSection, HomePageSectionsProviding, ChapterProviding, MangaProviding, SearchResultsProviding} from '@bindu-moe/types'
 import {SourceInstallRequest, SourceTestRequest, SourceTestResponse} from './devtools/generated/typescript/PDTSourceTester'
 import * as path from 'node:path'
 import cheerio from 'cheerio'
@@ -65,7 +64,7 @@ export class SourceTester implements ISourceTester {
     if (homepageProvider?.getHomePageSections) {
       await testCase('source should return homepage sections containing items', async () => {
         const sections: Record<string, HomeSection> = {}
-        await homepageProvider.getHomePageSections(section => {
+        await homepageProvider.getHomePageSections((section: HomeSection) => {
           sections[section.id] = section
         })
 
