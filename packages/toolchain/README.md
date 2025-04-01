@@ -20,7 +20,7 @@ $ npm install -g @bindu-moe/toolchain
 $ bindu COMMAND
 running command...
 $ bindu (--version)
-@bindu-moe/toolchain/0.0.1 darwin-arm64 node-v18.18.2
+@bindu-moe/toolchain/0.0.1 darwin-arm64 node-v22.12.0
 $ bindu --help [COMMAND]
 USAGE
   $ bindu COMMAND
@@ -29,24 +29,21 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-- [oclif-hello-world](#oclif-hello-world)
-- [Usage](#usage)
-- [Commands](#commands)
-  - [`bindu bundle`](#bindu-bundle)
-  - [`bindu help [COMMANDS]`](#bindu-help-commands)
-  - [`bindu logcat`](#bindu-logcat)
-  - [`bindu migrate`](#bindu-migrate)
-  - [`bindu plugins`](#bindu-plugins)
-  - [`bindu plugins:install PLUGIN...`](#bindu-pluginsinstall-plugin)
-  - [`bindu plugins:inspect PLUGIN...`](#bindu-pluginsinspect-plugin)
-  - [`bindu plugins:install PLUGIN...`](#bindu-pluginsinstall-plugin-1)
-  - [`bindu plugins:link PLUGIN`](#bindu-pluginslink-plugin)
-  - [`bindu plugins:uninstall PLUGIN...`](#bindu-pluginsuninstall-plugin)
-  - [`bindu plugins:uninstall PLUGIN...`](#bindu-pluginsuninstall-plugin-1)
-  - [`bindu plugins:uninstall PLUGIN...`](#bindu-pluginsuninstall-plugin-2)
-  - [`bindu plugins update`](#bindu-plugins-update)
-  - [`bindu serve`](#bindu-serve)
-  - [`bindu test [SOURCE]`](#bindu-test-source)
+* [`bindu bundle`](#bindu-bundle)
+* [`bindu help [COMMANDS]`](#bindu-help-commands)
+* [`bindu logcat`](#bindu-logcat)
+* [`bindu migrate`](#bindu-migrate)
+* [`bindu plugins`](#bindu-plugins)
+* [`bindu plugins:install PLUGIN...`](#bindu-pluginsinstall-plugin)
+* [`bindu plugins:inspect PLUGIN...`](#bindu-pluginsinspect-plugin)
+* [`bindu plugins:install PLUGIN...`](#bindu-pluginsinstall-plugin-1)
+* [`bindu plugins:link PLUGIN`](#bindu-pluginslink-plugin)
+* [`bindu plugins:uninstall PLUGIN...`](#bindu-pluginsuninstall-plugin)
+* [`bindu plugins:uninstall PLUGIN...`](#bindu-pluginsuninstall-plugin-1)
+* [`bindu plugins:uninstall PLUGIN...`](#bindu-pluginsuninstall-plugin-2)
+* [`bindu plugins update`](#bindu-plugins-update)
+* [`bindu serve`](#bindu-serve)
+* [`bindu test [SOURCE]`](#bindu-test-source)
 
 ## `bindu bundle`
 
@@ -60,13 +57,13 @@ FLAGS
   -h, --help        Show CLI help.
   --folder=<value>  Subfolder to output to
   --use-node-fs     For more info, check
-                    https://github.com/Bindu-iOS/bindu-toolchain/pull/4#issuecomment-1791566399
+                    https://github.com/Paperback-iOS/paperback-toolchain/pull/4#issuecomment-1791566399
 
 DESCRIPTION
   Builds all the sources in the repository and generates a versioning file
 ```
 
-_See code: [dist/commands/bundle.ts](https://github.com/Bindu-iOS/toolchain/blob/v0.0.1/dist/commands/bundle.ts)_
+_See code: [src/commands/bundle.ts](https://github.com/Paperback-iOS/toolchain/blob/v0.0.1/src/commands/bundle.ts)_
 
 ## `bindu help [COMMANDS]`
 
@@ -86,7 +83,7 @@ DESCRIPTION
   Display help for bindu.
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.2.9/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.2.20/src/commands/help.ts)_
 
 ## `bindu logcat`
 
@@ -104,7 +101,7 @@ DESCRIPTION
   describe the command here
 ```
 
-_See code: [dist/commands/logcat.ts](https://github.com/Bindu-iOS/toolchain/blob/v0.0.1/dist/commands/logcat.ts)_
+_See code: [src/commands/logcat.ts](https://github.com/Paperback-iOS/toolchain/blob/v0.0.1/src/commands/logcat.ts)_
 
 ## `bindu migrate`
 
@@ -121,7 +118,7 @@ EXAMPLES
   $ bindu migrate
 ```
 
-_See code: [dist/commands/migrate.ts](https://github.com/Bindu-iOS/toolchain/blob/v0.0.1/dist/commands/migrate.ts)_
+_See code: [src/commands/migrate.ts](https://github.com/Paperback-iOS/toolchain/blob/v0.0.1/src/commands/migrate.ts)_
 
 ## `bindu plugins`
 
@@ -141,7 +138,7 @@ EXAMPLES
   $ bindu plugins
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.4.6/src/commands/plugins/index.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.4.7/src/commands/plugins/index.ts)_
 
 ## `bindu plugins:install PLUGIN...`
 
@@ -206,6 +203,8 @@ EXAMPLES
   $ bindu plugins:inspect myplugin
 ```
 
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.4.7/src/commands/plugins/inspect.ts)_
+
 ## `bindu plugins:install PLUGIN...`
 
 Installs a plugin into the CLI.
@@ -244,6 +243,8 @@ EXAMPLES
   $ bindu plugins:install someuser/someplugin
 ```
 
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.4.7/src/commands/plugins/install.ts)_
+
 ## `bindu plugins:link PLUGIN`
 
 Links a plugin into the CLI for development.
@@ -271,28 +272,7 @@ EXAMPLES
   $ bindu plugins:link myplugin
 ```
 
-## `bindu plugins:uninstall PLUGIN...`
-
-Removes a plugin from the CLI.
-
-```
-USAGE
-  $ bindu plugins:uninstall PLUGIN...
-
-ARGUMENTS
-  PLUGIN  plugin to uninstall
-
-FLAGS
-  -h, --help     Show CLI help.
-  -v, --verbose
-
-DESCRIPTION
-  Removes a plugin from the CLI.
-
-ALIASES
-  $ bindu plugins unlink
-  $ bindu plugins remove
-```
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.4.7/src/commands/plugins/link.ts)_
 
 ## `bindu plugins:uninstall PLUGIN...`
 
@@ -316,6 +296,31 @@ ALIASES
   $ bindu plugins unlink
   $ bindu plugins remove
 ```
+
+## `bindu plugins:uninstall PLUGIN...`
+
+Removes a plugin from the CLI.
+
+```
+USAGE
+  $ bindu plugins:uninstall PLUGIN...
+
+ARGUMENTS
+  PLUGIN  plugin to uninstall
+
+FLAGS
+  -h, --help     Show CLI help.
+  -v, --verbose
+
+DESCRIPTION
+  Removes a plugin from the CLI.
+
+ALIASES
+  $ bindu plugins unlink
+  $ bindu plugins remove
+```
+
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.4.7/src/commands/plugins/uninstall.ts)_
 
 ## `bindu plugins:uninstall PLUGIN...`
 
@@ -356,6 +361,8 @@ DESCRIPTION
   Update installed plugins.
 ```
 
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.4.7/src/commands/plugins/update.ts)_
+
 ## `bindu serve`
 
 Build the sources and start a local server
@@ -369,13 +376,13 @@ FLAGS
   -p, --port=<value>  [default: 8080]
   -w, --watch         Rebuild sources on typescript file changes within directory
   --use-node-fs       For more info, check
-                      https://github.com/Bindu-iOS/bindu-toolchain/pull/4#issuecomment-1791566399
+                      https://github.com/Paperback-iOS/paperback-toolchain/pull/4#issuecomment-1791566399
 
 DESCRIPTION
   Build the sources and start a local server
 ```
 
-_See code: [dist/commands/serve.ts](https://github.com/Bindu-iOS/toolchain/blob/v0.0.1/dist/commands/serve.ts)_
+_See code: [src/commands/serve.ts](https://github.com/Paperback-iOS/toolchain/blob/v0.0.1/src/commands/serve.ts)_
 
 ## `bindu test [SOURCE]`
 
@@ -392,11 +399,11 @@ FLAGS
   --ip=<value>
   --port=<value>  [default: 27015]
   --use-node-fs   For more info, check
-                  https://github.com/Bindu-iOS/bindu-toolchain/pull/4#issuecomment-1791566399
+                  https://github.com/Paperback-iOS/paperback-toolchain/pull/4#issuecomment-1791566399
 
 DESCRIPTION
   describe the command here
 ```
 
-_See code: [dist/commands/test.ts](https://github.com/Bindu-iOS/toolchain/blob/v0.0.1/dist/commands/test.ts)_
+_See code: [src/commands/test.ts](https://github.com/Paperback-iOS/toolchain/blob/v0.0.1/src/commands/test.ts)_
 <!-- commandsstop -->
