@@ -1,0 +1,21 @@
+{
+  "name": "@bindu-moe/types",
+  "version": "0.0.1",
+  "description": "TypeScript Types for Bindu",
+  "keywords": [],
+  "author": "Dennis Ollhoff",
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.8.3"
+  },
+  "scripts": {
+    "build": "rm -rf lib && tsc",
+    "prepack": "pnpm build"
+  },
+  "main": "./lib/index.js",
+  "types": "./src/index.ts",
+  "gitHead": "458476cd856a175d64a13cead6a96fe192373cf1"
+}

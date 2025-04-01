@@ -1,0 +1,24 @@
+{
+  "name": "@bindu-moe/runtime-polyfills",
+  "version": "0.0.1",
+  "description": "Node runtime polyfills to test Bindu sources",
+  "main": "./lib/index.js",
+  "types": "./src/index.ts",
+  "scripts": {
+    "build": "rm -rf ./lib && tsc",
+    "prepack": "pnpm build"
+  },
+  "author": "Dennis Ollhoff",
+  "license": "MIT",
+  "devDependencies": {
+    "@bindu-moe/types": "workspace:*",
+    "typescript": "^4.8.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "458476cd856a175d64a13cead6a96fe192373cf1",
+  "dependencies": {
+    "axios": "^1.8.4"
+  }
+}
